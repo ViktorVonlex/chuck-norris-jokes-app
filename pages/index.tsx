@@ -1,8 +1,11 @@
+import Categories from "../components/Categories";
 
 export default function Home() {
   return (
     <>
-    <div className="text-3xl font-bold underline">Sup</div>
+    <div className="flex mx-auto px-4 h-screen">
+      <Categories />
+    </div>
     </>
   )
 }
