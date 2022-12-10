@@ -5,6 +5,8 @@ import React, { useEffect, useState } from 'react'
 export default function Home() {
 
   const [categoriesArray, setCategories] = useState<string[]>([])
+  const [joke, setJoke] = useState<string>("")
+  const [jokeUrl, setJokeUrl] = useState<string>("")
 
     useEffect(() => {
         fetch('https://api.chucknorris.io/jokes/categories')
@@ -17,12 +19,7 @@ export default function Home() {
             console.log(err)
         }
         )
-    }, [])
-    
-    const [joke, setJoke] = useState<string>("")
-    const [jokeUrl, setJokeUrl] = useState<string>("")
 
-    useEffect(() => {
         fetch('https://api.chucknorris.io/jokes/random')
         .then(res =>  res.json()
         )
@@ -33,9 +30,9 @@ export default function Home() {
         .catch(err => {
             console.log(err)
         }
-        )
+        )        
     }, [])
-
+    
     function getRandomJoke() {
       fetch('https://api.chucknorris.io/jokes/random')
       .then(res =>  res.json()
