@@ -1,12 +1,21 @@
 import Categories from "../components/Categories";
-import MiddlePanel from "../components/MiddlePanel";
 import React, { useEffect, useState } from 'react'
+import dynamic from 'next/dynamic'
+
+const FavJokes = dynamic(() => import('../components/FavJokes'), {
+  ssr: false,
+})
+
+const MiddlePanel = dynamic(() => import('../components/MiddlePanel'), {
+  ssr: false,
+})
 
 export default function Home() {
 
   const [categoriesArray, setCategories] = useState<string[]>([])
   const [joke, setJoke] = useState<string>("")
   const [jokeUrl, setJokeUrl] = useState<string>("")
+  const [counter, setCounter] = useState<number>(0);
 
     useEffect(() => {
         fetch('https://api.chucknorris.io/jokes/categories')
@@ -65,8 +74,8 @@ export default function Home() {
     <>
     <div className="flex mx-auto px-4 bg-gray-400 h-screen">
       <Categories categoriesArray={categoriesArray} getJokeFromCategory={getJokeFromCategory}/>
-      <MiddlePanel joke={joke} jokeUrl={jokeUrl} getRandomJoke={getRandomJoke}/>
-      <div className="w-1/6 bg-gray-900 mt-5">dasdasda</div>
+      <MiddlePanel joke={joke} jokeUrl={jokeUrl} counter={counter} getRandomJoke={getRandomJoke} setCounter={setCounter}/>
+      <FavJokes counter={counter} setCounter={setCounter}/>
     </div>
     </>
   )
