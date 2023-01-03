@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
+import FavJoke from './FavJoke'
 
 type Props = {
     counter: number,
     setCounter: Function,
     loading: Boolean,
     setLoading: Function,
-    setLastSavedJoke: Function
+    setLastSavedJoke: Function,
+    getFavJoke: Function
 }
 
 type Item = {
@@ -13,7 +15,7 @@ type Item = {
     jokeUrl: string
 }
 
-function FavJokes({setCounter, loading, setLoading, setLastSavedJoke}: Props) {
+function FavJokes({setCounter, loading, setLoading, setLastSavedJoke, getFavJoke}: Props) {
 
     const [items, setItems] = useState<Item[]>([]);
 
@@ -45,9 +47,7 @@ function FavJokes({setCounter, loading, setLoading, setLastSavedJoke}: Props) {
         </div>
             {
             items.map(item =>
-                <div className="category-entry" key={item.jokeNumber}>
-                    <div className="text-center py-2">{item.jokeNumber}</div>
-                </div>)
+                <FavJoke key={item.jokeNumber} jokeNumber={item.jokeNumber} jokeUrl={item.jokeUrl} getFavJoke={getFavJoke}/>)
             }
     </div> 
   )

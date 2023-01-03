@@ -47,6 +47,20 @@ export default function Home() {
       )
     }
 
+    function getFavJoke(url: string) {
+      fetch(url)
+      .then(res =>  res.json()
+      )
+      .then(data => {
+          setJoke(data.value);
+          setJokeUrl(data.url);
+      })
+      .catch(err => {
+          console.log(err)
+      }
+      )
+    }
+
     useEffect(() => {
       fetch('https://api.chucknorris.io/jokes/categories')
       .then(res =>  res.json()
@@ -67,7 +81,7 @@ export default function Home() {
     <div className="flex mx-auto px-4 bg-gray-400 h-screen">
       <Categories categoriesArray={categoriesArray} getJokeFromCategory={getJokeFromCategory}/>
       <MiddlePanel joke={joke} jokeUrl={jokeUrl} counter={counter} getRandomJoke={getRandomJoke} setCounter={setCounter} setLoading={setLoading} lastSavedJoke={lastSavedJoke} setLastSavedJoke={setLastSavedJoke}/>
-      <FavJokes counter={counter} setCounter={setCounter} loading={loading} setLoading={setLoading} setLastSavedJoke={setLastSavedJoke}/>
+      <FavJokes counter={counter} setCounter={setCounter} loading={loading} setLoading={setLoading} setLastSavedJoke={setLastSavedJoke} getFavJoke={getFavJoke}/>
     </div>
     </>
   )
