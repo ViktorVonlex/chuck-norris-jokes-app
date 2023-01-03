@@ -13,34 +13,11 @@ const MiddlePanel = dynamic(() => import('../components/MiddlePanel'), {
 export default function Home() {
 
   const [categoriesArray, setCategories] = useState<string[]>([])
-  const [joke, setJoke] = useState<string>("")
-  const [jokeUrl, setJokeUrl] = useState<string>("")
-  const [counter, setCounter] = useState<number>(0);
-
-    useEffect(() => {
-        fetch('https://api.chucknorris.io/jokes/categories')
-        .then(res =>  res.json()
-        )
-        .then(data => {
-            setCategories(data)
-        })
-        .catch(err => {
-            console.log(err)
-        }
-        )
-
-        fetch('https://api.chucknorris.io/jokes/random')
-        .then(res =>  res.json()
-        )
-        .then(data => {
-            setJoke(data.value);
-            setJokeUrl(data.url);
-        })
-        .catch(err => {
-            console.log(err)
-        }
-        )        
-    }, [])
+  const [joke, setJoke] = useState<string>("");
+  const [jokeUrl, setJokeUrl] = useState<string>("");
+  const [counter, setCounter] = useState<number>(1);
+  const [loading, setLoading] = useState<Boolean>(false);
+  const [lastSavedJoke, setLastSavedJoke] = useState<string>("")
     
     function getRandomJoke() {
       fetch('https://api.chucknorris.io/jokes/random')
@@ -70,12 +47,27 @@ export default function Home() {
       )
     }
 
+    useEffect(() => {
+      fetch('https://api.chucknorris.io/jokes/categories')
+      .then(res =>  res.json()
+      )
+      .then(data => {
+          setCategories(data)
+      })
+      .catch(err => {
+          console.log(err)
+      }
+      )
+
+      getRandomJoke()        
+  }, [])
+
   return (
     <>
     <div className="flex mx-auto px-4 bg-gray-400 h-screen">
       <Categories categoriesArray={categoriesArray} getJokeFromCategory={getJokeFromCategory}/>
-      <MiddlePanel joke={joke} jokeUrl={jokeUrl} counter={counter} getRandomJoke={getRandomJoke} setCounter={setCounter}/>
-      <FavJokes counter={counter} setCounter={setCounter}/>
+      <MiddlePanel joke={joke} jokeUrl={jokeUrl} counter={counter} getRandomJoke={getRandomJoke} setCounter={setCounter} setLoading={setLoading} lastSavedJoke={lastSavedJoke} setLastSavedJoke={setLastSavedJoke}/>
+      <FavJokes counter={counter} setCounter={setCounter} loading={loading} setLoading={setLoading} setLastSavedJoke={setLastSavedJoke}/>
     </div>
     </>
   )

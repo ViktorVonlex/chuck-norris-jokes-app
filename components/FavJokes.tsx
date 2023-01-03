@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react'
 
 type Props = {
     counter: number,
-    setCounter: Function
+    setCounter: Function,
+    loading: Boolean,
+    setLoading: Function,
+    setLastSavedJoke: Function
 }
 
 type Item = {
@@ -10,21 +13,23 @@ type Item = {
     jokeUrl: string
 }
 
-function FavJokes({counter, setCounter}: Props) {
+function FavJokes({counter, setCounter, loading, setLoading, setLastSavedJoke}: Props) {
 
     const [items, setItems] = useState<Item[]>([]);
 
-    function allStorage() {
-        var archive:any = [];
-        for (var i:number = 0; i<localStorage.length; i++) {
-            archive[i] = localStorage.getItem(localStorage.key(i)!);
-        }
-        return archive;
-    }
-
     useEffect(() => {
-        setItems(allStorage())
-    }, [counter]);
+
+        const allStorage = () => {
+            const jokes:Item[] = []
+            for (var i:number = 1; i<localStorage.length; i++) {
+                jokes.push(JSON.parse(localStorage.getItem(i.toString())!))
+            }
+            setItems(jokes)
+            setLoading(false)
+        }
+        allStorage()
+        console.log(items)
+    }, [loading]);
 
 
   return (
@@ -33,7 +38,9 @@ function FavJokes({counter, setCounter}: Props) {
         <div className="category-entry">
             <div className="text-center py-2" onClick={() => {
                 localStorage.clear()
-                setCounter(0)
+                setLastSavedJoke()
+                setLoading(true)
+                setCounter(1)
                 }
             }>Clear Jokes</div>
         </div>
@@ -43,6 +50,7 @@ function FavJokes({counter, setCounter}: Props) {
                     <div className="text-center py-2">{item.jokeNumber}</div>
                 </div>)
             }
+        <div className="text-center">{counter}</div>
     </div> 
   )
 }
