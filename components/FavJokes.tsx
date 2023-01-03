@@ -13,7 +13,7 @@ type Item = {
     jokeUrl: string
 }
 
-function FavJokes({counter, setCounter, loading, setLoading, setLastSavedJoke}: Props) {
+function FavJokes({setCounter, loading, setLoading, setLastSavedJoke}: Props) {
 
     const [items, setItems] = useState<Item[]>([]);
 
@@ -21,14 +21,13 @@ function FavJokes({counter, setCounter, loading, setLoading, setLastSavedJoke}: 
 
         const allStorage = () => {
             const jokes:Item[] = []
-            for (var i:number = 1; i<localStorage.length; i++) {
+            for (var i:number = 1; i<localStorage.length+1; i++) {
                 jokes.push(JSON.parse(localStorage.getItem(i.toString())!))
             }
             setItems(jokes)
             setLoading(false)
         }
         allStorage()
-        console.log(items)
     }, [loading]);
 
 
@@ -50,7 +49,6 @@ function FavJokes({counter, setCounter, loading, setLoading, setLastSavedJoke}: 
                     <div className="text-center py-2">{item.jokeNumber}</div>
                 </div>)
             }
-        <div className="text-center">{counter}</div>
     </div> 
   )
 }

@@ -23,12 +23,7 @@ function MiddlePanel({joke, jokeUrl, counter, getRandomJoke, setCounter, setLoad
     jokeUrl: jokeUrl
   }
 
-
   function saveJoke (object:Item) {
-    console.log("JokeNumber: " + object.jokeNumber)
-    console.log("Counter: " + counter)
-    console.log(object.jokeNumber.toString())
-    console.log(localStorage.getItem(counter.toString()))
     if(object.jokeUrl !== lastSavedJoke) {
       localStorage.setItem(counter.toString(), JSON.stringify(object));
       setLastSavedJoke(object.jokeUrl)
