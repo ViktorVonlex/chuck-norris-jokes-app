@@ -5,9 +5,14 @@ type Props = {
     setCounter: Function
 }
 
+type Item = {
+    jokeNumber: number
+    jokeUrl: string
+}
+
 function FavJokes({counter, setCounter}: Props) {
 
-    const [items, setItems] = useState<string[]>([]);
+    const [items, setItems] = useState<Item[]>([]);
 
     function allStorage() {
         var archive:any = [];
@@ -33,9 +38,9 @@ function FavJokes({counter, setCounter}: Props) {
             }>Clear Jokes</div>
         </div>
             {
-            items.map(jokeNumber =>
-                <div className="category-entry" key={jokeNumber}>
-                    <div className="text-center py-2">{jokeNumber}</div>
+            items.map(item =>
+                <div className="category-entry" key={item.jokeNumber}>
+                    <div className="text-center py-2">{item.jokeNumber}</div>
                 </div>)
             }
     </div> 
