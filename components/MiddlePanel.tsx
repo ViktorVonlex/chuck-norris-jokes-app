@@ -27,8 +27,6 @@ function MiddlePanel({joke, jokeUrl, counter, getRandomJoke, setCounter, setLoad
   }
 
   function checkItems(object:Item, items:Item[]):boolean {
-    console.log(items)
-    console.log(object.jokeUrl)
     let passedItem:Item = {jokeNumber: 999, jokeUrl: "nothing to see here"};
     items.forEach(element => {
       if (element.jokeUrl == object.jokeUrl){
@@ -37,10 +35,8 @@ function MiddlePanel({joke, jokeUrl, counter, getRandomJoke, setCounter, setLoad
       }
     });
     if(passedItem.jokeUrl == object.jokeUrl){
-      console.log("Already here")
       return true
     } else {
-      console.log("First here")
     return false
     }
   }
