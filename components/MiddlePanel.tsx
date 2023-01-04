@@ -31,7 +31,6 @@ function MiddlePanel({joke, jokeUrl, counter, getRandomJoke, setCounter, setLoad
     items.forEach(element => {
       if (element.jokeUrl == object.jokeUrl){
         passedItem = element;
-        console.log(passedItem)
       }
     });
     if(passedItem.jokeUrl == object.jokeUrl){
