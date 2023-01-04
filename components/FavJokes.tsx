@@ -1,23 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import FavJoke from './FavJoke'
+import { Item } from '../types/utils';
 
 type Props = {
-    counter: number,
     setCounter: Function,
     loading: Boolean,
+    items: Item[],
     setLoading: Function,
-    setLastSavedJoke: Function,
-    getFavJoke: Function
+    getFavJoke: Function,
+    setItems: Function
 }
 
-type Item = {
-    jokeNumber: number
-    jokeUrl: string
-}
-
-function FavJokes({setCounter, loading, setLoading, setLastSavedJoke, getFavJoke}: Props) {
-
-    const [items, setItems] = useState<Item[]>([]);
+function FavJokes({setCounter, loading, setLoading, getFavJoke, items, setItems}: Props) {
 
     useEffect(() => {
 
@@ -32,14 +26,12 @@ function FavJokes({setCounter, loading, setLoading, setLastSavedJoke, getFavJoke
         allStorage()
     }, [loading]);
 
-
   return (
     <div className="bg-gray-900 rounded-3xl shadow-2xl w-1/6 mt-5 h-min text-white max-[1536px]:h-5/6 max-[1536px]:overflow-auto scrollbar-hide">
         <div className="pb-4 pt-4 text-center">Favourite Jokes</div>
         <div className="category-entry">
             <div className="text-center py-2" onClick={() => {
                 localStorage.clear()
-                setLastSavedJoke()
                 setLoading(true)
                 setCounter(1)
                 }

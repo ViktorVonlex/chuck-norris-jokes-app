@@ -1,34 +1,47 @@
 import React, { useState } from 'react'
+import { Item } from '../types/utils';
 
 type Props = {
     joke: string,
     jokeUrl: string,
     counter: number,
+    items: Item[],
     getRandomJoke: Function,
     setCounter: Function,
-    setLoading: Function,
-    lastSavedJoke: string,
-    setLastSavedJoke: Function
+    setLoading: Function
 }
 
-type Item = {
-  jokeNumber: number
-  jokeUrl: string
-}
-
-function MiddlePanel({joke, jokeUrl, counter, getRandomJoke, setCounter, setLoading, lastSavedJoke, setLastSavedJoke}: Props) {
+function MiddlePanel({joke, jokeUrl, counter, getRandomJoke, setCounter, setLoading, items}: Props) {
 
   const jokeInfo:Item = {
     jokeNumber: counter,
     jokeUrl: jokeUrl
   }
 
-  function saveJoke (object:Item) {
-    if(object.jokeUrl !== lastSavedJoke) {
+  function saveJoke (object:Item, items:Item[]) {
+    if(!checkItems(object,items)) {
       localStorage.setItem(counter.toString(), JSON.stringify(object));
-      setLastSavedJoke(object.jokeUrl)
       setLoading(true)
       setCounter(counter+1)
+    }
+  }
+
+  function checkItems(object:Item, items:Item[]):boolean {
+    console.log(items)
+    console.log(object.jokeUrl)
+    let passedItem:Item = {jokeNumber: 999, jokeUrl: "nothing to see here"};
+    items.forEach(element => {
+      if (element.jokeUrl == object.jokeUrl){
+        passedItem = element;
+        console.log(passedItem)
+      }
+    });
+    if(passedItem.jokeUrl == object.jokeUrl){
+      console.log("Already here")
+      return true
+    } else {
+      console.log("First here")
+    return false
     }
   }
 
@@ -38,7 +51,7 @@ function MiddlePanel({joke, jokeUrl, counter, getRandomJoke, setCounter, setLoad
         <div className="flex text-center mt-5">
             <div className="w-2/3 mr-1 middle-button p-4" onClick={() => getRandomJoke()}>Get random joke!</div>
             <div className="w-1/3 ml-1 middle-button p-4" onClick={() => {
-              saveJoke(jokeInfo)
+              saveJoke(jokeInfo, items)
             }}>Save this joke</div>
         </div>
         <div className="w-full bg-gray-900 mt-5 pt-4 rounded-3xl">
