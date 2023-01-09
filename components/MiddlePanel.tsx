@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client';
 import React, { useState } from 'react'
 import { Item } from '../types/utils';
 
