@@ -6,8 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = "postgres://dbwhfywb:IX4gakRJinXNin31CJDuaF4fPA457MEf@dumbo.db.elephantsql.com/dbwhfywb"
 }
 
 model Joke {
