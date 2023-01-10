@@ -1,9 +1,8 @@
 /* eslint-disable import/no-anonymous-default-export */
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { PrismaClient, Prisma } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { Prisma } from '@prisma/client';
+import prisma from '../../utils/prisma';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'POST') {

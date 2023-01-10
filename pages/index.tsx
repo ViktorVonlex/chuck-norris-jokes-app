@@ -1,7 +1,7 @@
 import Categories from "../components/Categories";
 import React, { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
-import { Item } from "../types/utils";
+import { Item } from "../utils/utils";
 import Login from "../components/Login";
 
 const FavJokes = dynamic(() => import('../components/FavJokes'), {

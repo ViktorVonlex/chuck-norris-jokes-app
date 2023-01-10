@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import FavJoke from './FavJoke'
-import { Item } from '../types/utils';
+import { Item } from '../utils/utils';
 
 type Props = {
     setCounter: Function,

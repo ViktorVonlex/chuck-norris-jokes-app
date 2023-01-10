@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client';
 import React, { useState } from 'react'
-import { Item } from '../types/utils';
+import { Item } from '../utils/utils';
 
 type Props = {
     joke: string,
