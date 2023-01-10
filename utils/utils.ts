@@ -13,10 +13,10 @@ export async function saveUser(userInfo: UserInfo) {
       method: 'POST',
       body: JSON.stringify({...userInfo})
     });
-  
+    console.log("before ok in saveUser")
     if (!response.ok) {
       throw new Error(response.statusText);
     }
-    console.log("in saveUser")
+    console.log("ok in saveUser")
     return await response.json();
   }
