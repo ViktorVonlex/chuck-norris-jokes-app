@@ -37,9 +37,11 @@ function FavJokes({setCounter, loading, setLoading, getFavJoke, items, setItems}
                 }
             }>Clear Jokes</div>
         </div>
-            {
+            { items.length 
+            ?
             items.map(item =>
                 <FavJoke key={item.jokeNumber} jokeNumber={item.jokeNumber} jokeUrl={item.jokeUrl} getFavJoke={getFavJoke}/>)
+            : <div>Loading</div>
             }
     </div> 
   )
