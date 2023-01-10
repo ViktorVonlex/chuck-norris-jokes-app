@@ -6,8 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = "postgres://dbwhfywb:IX4gakRJinXNin31CJDuaF4fPA457MEf@dumbo.db.elephantsql.com/dbwhfywb"
+  provider = "mysql"
+  url = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model Joke {
