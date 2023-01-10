@@ -3,10 +3,10 @@ export type Item = {
     jokeUrl: string
 }
 
-export async function saveUser() {
+export async function saveUser(name: String) {
     const response = await fetch('/api/createUser', {
       method: 'POST',
-      body: JSON.stringify({userName: "Mirek"})
+      body: JSON.stringify({userName: name})
     });
   
     if (!response.ok) {
