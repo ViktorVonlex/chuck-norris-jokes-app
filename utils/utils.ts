@@ -17,5 +17,6 @@ export async function saveUser(userInfo: UserInfo) {
     if (!response.ok) {
       throw new Error(response.statusText);
     }
+    console.log("in saveUser")
     return await response.json();
   }
