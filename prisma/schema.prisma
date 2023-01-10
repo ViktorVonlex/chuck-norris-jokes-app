@@ -19,7 +19,8 @@ model Joke {
 
 model User {
   id Int @id @default(autoincrement())
-  userName String
+  email String @unique
+  password String
   savedJokes UsersJokes[]
 }
 
