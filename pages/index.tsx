@@ -84,12 +84,9 @@ export default function Home() {
     <div className="flex mx-auto px-4 bg-gray-400 h-screen">
       <Categories categoriesArray={categoriesArray} getJokeFromCategory={getJokeFromCategory}/>
       <MiddlePanel joke={joke} jokeUrl={jokeUrl} counter={counter} getRandomJoke={getRandomJoke} setCounter={setCounter} setLoading={setLoading} items={items}/>
-      {loggedIn 
-      ? <FavJokes setCounter={setCounter} loading={loading} setLoading={setLoading} getFavJoke={getFavJoke} items={items} setItems={setItems} />
-      : <div className="bg-gray-900 rounded-3xl shadow-2xl w-1/6 mt-5 h-min text-white">
-          <div className="pb-4 pt-4 text-center text-xl">Log in to see fav jokes</div>
-          <Login setLoggedIn={setLoggedIn}/>
-        </div>
+      {
+       <FavJokes setCounter={setCounter} loading={loading} setLoading={setLoading} getFavJoke={getFavJoke} items={items} setItems={setItems} />
+      
       }
     </div>
     </>
