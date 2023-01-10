@@ -9,11 +9,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(405).json({ message: 'Method not allowed' });
   }
 
-  console.log("middle of createUser")
-
   try {
+    console.log("top of try catch createUser")
     const user: Prisma.UserCreateInput = JSON.parse(req.body);
+    console.log("parsing req body")
+    console.log(user)
     const savedUser = await prisma.user.create({ data: user });
+    console.log("after getting savedUser")
+    console.log(savedUser)
     res.status(200).json(savedUser);
   } catch (err) {
     res.status(400).json({ message: 'Something went wrong' });
