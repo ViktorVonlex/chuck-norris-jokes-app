@@ -17,8 +17,13 @@ function FavJokes({setCounter, loading, setLoading, getFavJoke, items, setItems}
 
         const allStorage = () => {
             const jokes:Item[] = []
-            for (var i:number = 1; i<localStorage.length+1; i++) {
-                jokes.push(JSON.parse(localStorage.getItem(i.toString())!))
+            for (var i:number = 0; i<localStorage.length; i++) {
+                const correctNumber: number = i+1
+                const joke = localStorage.getItem(correctNumber.toString())
+                if (joke !== null){
+                    jokes.push(JSON.parse(joke))
+                }
+               else console.log("bs")
             }
             setItems(jokes)
             setLoading(false)
@@ -38,8 +43,12 @@ function FavJokes({setCounter, loading, setLoading, getFavJoke, items, setItems}
             }>Clear Jokes</div>
         </div>
             { 
-            items.map(item =>
-                <FavJoke key={item.jokeNumber} jokeNumber={item.jokeNumber} jokeUrl={item.jokeUrl} getFavJoke={getFavJoke}/>)
+            items.map(item => {
+                if (item !==null) {
+                    return <FavJoke key={item.jokeNumber} jokeNumber={item.jokeNumber} jokeUrl={item.jokeUrl} getFavJoke={getFavJoke}/>
+                }
+            }
+                )
             }
     </div> 
   )
