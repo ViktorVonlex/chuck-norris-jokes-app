@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Item } from '../utils/utils';
 
 type Props = {
@@ -14,14 +14,25 @@ type Props = {
 
 function MiddlePanel({joke, jokeUrl, counter, getRandomJoke, setCounter, setLoading, items}: Props) {
 
-  const jokeInfo:Item = {
+  let jokeInfo:Item = {
     jokeNumber: counter,
     jokeUrl: jokeUrl
   }
 
+
+  useEffect(()=>{
+    setCounter(getProperCounter())
+  },[])
+
   function saveJoke (object:Item, items:Item[]) {
     if(!checkItems(object,items)) {
-      localStorage.setItem(counter.toString(), JSON.stringify(object));
+      let helpingNumber: number = counter+1
+      if(localStorage.getItem(helpingNumber.toString()) !== null) {
+        object.jokeNumber = helpingNumber
+        helpingNumber = helpingNumber+1;
+        localStorage.setItem(helpingNumber.toString(), JSON.stringify(object));
+      }
+      localStorage.setItem(helpingNumber.toString(), JSON.stringify(object));
       setLoading(true)
       setCounter(counter+1)
     }
@@ -39,6 +50,14 @@ function MiddlePanel({joke, jokeUrl, counter, getRandomJoke, setCounter, setLoad
     } else {
     return false
     }
+  }
+
+  function getProperCounter():number {
+    if(localStorage.length === 0) {
+      console.log("bs alert")
+      return 1
+    }
+    return localStorage.length
   }
 
   return (

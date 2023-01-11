@@ -14,16 +14,16 @@ type Props = {
 function FavJokes({setCounter, loading, setLoading, getFavJoke, items, setItems}: Props) {
 
     useEffect(() => {
-
         const allStorage = () => {
             const jokes:Item[] = []
-            for (var i:number = 0; i<localStorage.length; i++) {
+            for (var i:number = 1; i<localStorage.length+1; i++) {
                 const correctNumber: number = i+1
                 const joke = localStorage.getItem(correctNumber.toString())
                 if (joke !== null){
                     jokes.push(JSON.parse(joke))
                 }
-               else console.log("bs")
+                else
+                console.log("bs here, have to clear localStorage :(") 
             }
             setItems(jokes)
             setLoading(false)
