@@ -22,9 +22,6 @@ function FavJokes({setCounter, loading, setLoading, getFavJoke, items, setItems}
                 if (joke !== null){
                     jokes.push(JSON.parse(joke))
                 }
-                else if(joke === null){
-                    console.log("bs here, have to clear localStorage :(") 
-                }
             }
             setItems(jokes)
             setLoading(false)

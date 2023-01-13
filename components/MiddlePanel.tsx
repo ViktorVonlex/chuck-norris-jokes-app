@@ -27,18 +27,11 @@ function MiddlePanel({joke, jokeUrl, counter, getRandomJoke, setCounter, setLoad
   function betterSaveJoke(object:Item, items:Item[]) {
     if(!checkItems(object,items)) {
       const jokes:Item[] = []
-      console.log(items)
       for (var i:number = 0; i<localStorage.length+1; i++) {
         const correctNumber: number = i+1
         const joke = localStorage.getItem(correctNumber.toString())
-        console.log(joke)
-        console.log(i)
         if (joke !== null){
           jokes.push(JSON.parse(joke))
-          console.log(joke)
-        }
-        else if(joke === null){
-          console.log("Some BS here") 
         }
       }
       if(jokes.length==0){
@@ -47,8 +40,6 @@ function MiddlePanel({joke, jokeUrl, counter, getRandomJoke, setCounter, setLoad
           jokeUrl: object.jokeUrl
         }
         localStorage.setItem("1", JSON.stringify(helpingObject))
-        console.log("first saved joke")
-        console.log(helpingObject)
         setItems(jokes)
         setLoading(true)
       }
@@ -64,8 +55,6 @@ function MiddlePanel({joke, jokeUrl, counter, getRandomJoke, setCounter, setLoad
         setItems(jokes)
         setLoading(true)
         }
-      } else {
-        console.log("same object")
       }
     }
 
