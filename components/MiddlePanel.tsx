@@ -24,54 +24,48 @@ function MiddlePanel({joke, jokeUrl, counter, getRandomJoke, setCounter, setLoad
     setCounter(localStorage.length)
   },[])
 
-  function saveJoke (object:Item, items:Item[]) {
-    if(!checkItems(object,items)) {
-      let helpingNumber: number = counter+1
-      if(localStorage.getItem(helpingNumber.toString()) !== null) {
-        let lastIndex = localStorage.length
-        object.jokeNumber = helpingNumber
-        helpingNumber = helpingNumber+1;
-        localStorage.setItem(lastIndex.toString(), JSON.stringify(object));
-      }
-      localStorage.setItem(helpingNumber.toString(), JSON.stringify(object));
-      setLoading(true)
-      setCounter(counter+1)
-    }
-  }
-
   function betterSaveJoke(object:Item, items:Item[]) {
     if(!checkItems(object,items)) {
       const jokes:Item[] = []
-        for (var i:number = 0; i<localStorage.length; i++) {
-          const correctNumber: number = i+1
-          const joke = localStorage.getItem(correctNumber.toString())
-          if (joke !== null){
-            jokes.push(JSON.parse(joke))
-          }
-          else if(joke === null){
-            console.log("Some BS here") 
-          }
+      console.log(items)
+      for (var i:number = 0; i<localStorage.length+1; i++) {
+        const correctNumber: number = i+1
+        const joke = localStorage.getItem(correctNumber.toString())
+        console.log(joke)
+        console.log(i)
+        if (joke !== null){
+          jokes.push(JSON.parse(joke))
+          console.log(joke)
         }
+        else if(joke === null){
+          console.log("Some BS here") 
+        }
+      }
       if(jokes.length==0){
-        localStorage.setItem("1", JSON.stringify(object))
+        const helpingObject:Item = {
+          jokeNumber: 1,
+          jokeUrl: object.jokeUrl
+        }
+        localStorage.setItem("1", JSON.stringify(helpingObject))
+        console.log("first saved joke")
+        console.log(helpingObject)
+        setItems(jokes)
+        setLoading(true)
       }
       else {
-        console.log(jokes)
-        console.log(jokes[jokes.length-1])
         const lastSavedJokeNumber = jokes[jokes.length-1]
         const tpc = lastSavedJokeNumber.jokeNumber
-        console.log(lastSavedJokeNumber)
         const helpingObject:Item = {
           jokeNumber: tpc+1,
           jokeUrl: object.jokeUrl
         }
         localStorage.setItem(helpingObject.jokeNumber.toString(), JSON.stringify(helpingObject))
-        console.log(helpingObject)
         jokes.push(helpingObject)
-        console.log(jokes)
         setItems(jokes)
-        setLoading(false)
+        setLoading(true)
         }
+      } else {
+        console.log("same object")
       }
     }
 

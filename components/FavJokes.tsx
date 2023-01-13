@@ -16,7 +16,7 @@ function FavJokes({setCounter, loading, setLoading, getFavJoke, items, setItems}
     useEffect(() => {
         const allStorage = () => {
             const jokes:Item[] = []
-            for (var i:number = 0; i<localStorage.length; i++) {
+            for (var i:number = 0; i<localStorage.length+1; i++) {
                 const correctNumber: number = i+1
                 const joke = localStorage.getItem(correctNumber.toString())
                 if (joke !== null){
@@ -24,7 +24,6 @@ function FavJokes({setCounter, loading, setLoading, getFavJoke, items, setItems}
                 }
                 else if(joke === null){
                     console.log("bs here, have to clear localStorage :(") 
-                localStorage.removeItem(correctNumber.toString())
                 }
             }
             setItems(jokes)
