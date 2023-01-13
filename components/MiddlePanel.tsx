@@ -9,16 +9,16 @@ type Props = {
     items: Item[],
     getRandomJoke: Function,
     setCounter: Function,
-    setLoading: Function
+    setLoading: Function,
+    setItems: Function
 }
 
-function MiddlePanel({joke, jokeUrl, counter, getRandomJoke, setCounter, setLoading, items}: Props) {
+function MiddlePanel({joke, jokeUrl, counter, getRandomJoke, setCounter, setLoading, items, setItems}: Props) {
 
   let jokeInfo:Item = {
     jokeNumber: counter,
     jokeUrl: jokeUrl
   }
-
 
   useEffect(()=>{
     setCounter(localStorage.length)
@@ -41,34 +41,39 @@ function MiddlePanel({joke, jokeUrl, counter, getRandomJoke, setCounter, setLoad
 
   function betterSaveJoke(object:Item, items:Item[]) {
     if(!checkItems(object,items)) {
-      if(localStorage.length == 0){
-        console.log("inside first if")
-        let helpingObject:Item = {
-          jokeNumber: 1,
-          jokeUrl: object.jokeUrl
+      const jokes:Item[] = []
+        for (var i:number = 0; i<localStorage.length; i++) {
+          const correctNumber: number = i+1
+          const joke = localStorage.getItem(correctNumber.toString())
+          if (joke !== null){
+            jokes.push(JSON.parse(joke))
+          }
+          else if(joke === null){
+            console.log("Some BS here") 
+          }
         }
-        localStorage.setItem("1", JSON.stringify(helpingObject));
-        setLoading(true)
-        setCounter(counter+1)
+      if(jokes.length==0){
+        localStorage.setItem("1", JSON.stringify(object))
       }
-      else if(localStorage.length >= 1) {
-        console.log("inside second if")
-        //@ts-ignore
-        let lastSavedJoke: Item = JSON.parse(localStorage.getItem(localStorage.length))
-        const helpingNumber: number = lastSavedJoke.jokeNumber+1
-        let helpingObject:Item = {
-          jokeNumber: helpingNumber,
+      else {
+        console.log(jokes)
+        console.log(jokes[jokes.length-1])
+        const lastSavedJokeNumber = jokes[jokes.length-1]
+        const tpc = lastSavedJokeNumber.jokeNumber
+        console.log(lastSavedJokeNumber)
+        const helpingObject:Item = {
+          jokeNumber: tpc+1,
           jokeUrl: object.jokeUrl
         }
-        localStorage.setItem(helpingNumber.toString(), JSON.stringify(helpingObject));
-        console.log(counter)
-        console.log(helpingNumber)
-        console.log(localStorage.length)
-        setLoading(true)
-        setCounter(counter+1)
+        localStorage.setItem(helpingObject.jokeNumber.toString(), JSON.stringify(helpingObject))
+        console.log(helpingObject)
+        jokes.push(helpingObject)
+        console.log(jokes)
+        setItems(jokes)
+        setLoading(false)
+        }
       }
     }
-  }
 
   function checkItems(object:Item, items:Item[]):boolean {
     let passedItem:Item = {jokeNumber: 999, jokeUrl: "nothing to see here"};
