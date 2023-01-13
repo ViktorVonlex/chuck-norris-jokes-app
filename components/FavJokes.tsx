@@ -22,9 +22,10 @@ function FavJokes({setCounter, loading, setLoading, getFavJoke, items, setItems}
                 if (joke !== null){
                     jokes.push(JSON.parse(joke))
                 }
-                else
-                console.log("bs here, have to clear localStorage :(") 
+                else if(joke === null){
+                    console.log("bs here, have to clear localStorage :(") 
                 localStorage.removeItem(correctNumber.toString())
+                }
             }
             setItems(jokes)
             setLoading(false)
