@@ -20,7 +20,7 @@ export default function Home() {
   const [counter, setCounter] = useState<number>(1);
   const [loading, setLoading] = useState<Boolean>(false);
   const [items, setItems] = useState<Item[]>([]);
-  const [loggedIn, setLoggedIn] = useState<Boolean>(true)
+  const [loggedIn, setLoggedIn] = useState<Boolean>(false)
     
     function getRandomJoke() {
       fetch('https://api.chucknorris.io/jokes/random')
