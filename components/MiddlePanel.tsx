@@ -55,7 +55,7 @@ function MiddlePanel({joke, jokeUrl, counter, getRandomJoke, setCounter, setLoad
         console.log("inside second if")
         //@ts-ignore
         let lastSavedJoke: Item = JSON.parse(localStorage.getItem(localStorage.length))
-        let helpingNumber: number = lastSavedJoke.jokeNumber+1
+        const helpingNumber: number = lastSavedJoke.jokeNumber+1
         let helpingObject:Item = {
           jokeNumber: helpingNumber,
           jokeUrl: object.jokeUrl
