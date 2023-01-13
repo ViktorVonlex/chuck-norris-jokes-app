@@ -24,6 +24,7 @@ function FavJokes({setCounter, loading, setLoading, getFavJoke, items, setItems}
                 }
                 else
                 console.log("bs here, have to clear localStorage :(") 
+                localStorage.removeItem(correctNumber.toString())
             }
             setItems(jokes)
             setLoading(false)
