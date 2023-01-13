@@ -14,13 +14,13 @@ const MiddlePanel = dynamic(() => import('../components/MiddlePanel'), {
 
 export default function Home() {
 
-  const [categoriesArray, setCategories] = useState<string[]>([])
+  const [categoriesArray, setCategories] = useState<string[]>([]);
   const [joke, setJoke] = useState<string>("");
   const [jokeUrl, setJokeUrl] = useState<string>("");
   const [counter, setCounter] = useState<number>(1);
   const [loading, setLoading] = useState<Boolean>(false);
   const [items, setItems] = useState<Item[]>([]);
-  const [loggedIn, setLoggedIn] = useState<Boolean>(false)
+  const [loggedIn, setLoggedIn] = useState<Boolean>(true)
     
     function getRandomJoke() {
       fetch('https://api.chucknorris.io/jokes/random')

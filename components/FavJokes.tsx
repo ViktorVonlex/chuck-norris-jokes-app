@@ -16,7 +16,7 @@ function FavJokes({setCounter, loading, setLoading, getFavJoke, items, setItems}
     useEffect(() => {
         const allStorage = () => {
             const jokes:Item[] = []
-            for (var i:number = 1; i<localStorage.length+1; i++) {
+            for (var i:number = 0; i<localStorage.length; i++) {
                 const correctNumber: number = i+1
                 const joke = localStorage.getItem(correctNumber.toString())
                 if (joke !== null){
