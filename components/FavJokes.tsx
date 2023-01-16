@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import FavJoke from './FavJoke'
 import { Item } from '../utils/utils';
+import {signOut} from 'next-auth/react'
 
 type Props = {
     setCounter: Function,
@@ -48,6 +49,9 @@ function FavJokes({setCounter, loading, setLoading, getFavJoke, items, setItems}
             }
                 )
             }
+            <div className="category-entry text-center py-2" onClick={()=>{
+                signOut()
+            }}>Logout</div>
     </div> 
   )
 }

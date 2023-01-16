@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { Item } from "../utils/utils";
 import Login from "../components/Login";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 const FavJokes = dynamic(() => import('../components/FavJokes'), {
   ssr: false,
@@ -20,7 +22,7 @@ export default function Home() {
   const [counter, setCounter] = useState<number>(1);
   const [loading, setLoading] = useState<Boolean>(false);
   const [items, setItems] = useState<Item[]>([]);
-  const [loggedIn, setLoggedIn] = useState<Boolean>(false)
+  const { data: session, status } = useSession()
     
     function getRandomJoke() {
       fetch('https://api.chucknorris.io/jokes/random')
@@ -84,11 +86,15 @@ export default function Home() {
     <div className="flex mx-auto px-4 bg-gray-400 h-screen">
       <Categories categoriesArray={categoriesArray} getJokeFromCategory={getJokeFromCategory}/>
       <MiddlePanel joke={joke} jokeUrl={jokeUrl} counter={counter} getRandomJoke={getRandomJoke} setCounter={setCounter} setLoading={setLoading} items={items} setItems={setItems}/>
-      {loggedIn 
+      {status === "authenticated"
       ? <FavJokes setCounter={setCounter} loading={loading} setLoading={setLoading} getFavJoke={getFavJoke} items={items} setItems={setItems} />
       : <div className="bg-gray-900 rounded-3xl shadow-2xl w-1/6 mt-5 h-min text-white">
-          <div className="pb-4 pt-4 text-center text-xl">Log in to see fav jokes</div>
-          <Login setLoggedIn={setLoggedIn}/>
+          <div className="mx-auto w-5/6 flex flex-col justify-center">
+            <div className="pb-4 pt-4 text-center text-xl mx-auto">Log in to see fav jokes</div>
+            <Link href="/login" className="text-center flex flex-col justify-center button mb-3">
+              Log in here
+            </Link>
+          </div>
         </div>
       }
     </div>

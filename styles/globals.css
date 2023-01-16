@@ -9,4 +9,8 @@
     .middle-button {
         @apply bg-gray-800 text-green-500 shadow-2xl rounded-3xl hover:bg-green-600 hover:text-white hover:rounded-xl transition-all duration-300 ease-linear
     }
+
+    .button{
+        @apply mx-auto w-4/5 h-10 bg-gray-800 text-green-500 shadow-2xl rounded-3xl hover:bg-green-600 hover:text-white hover:rounded-xl transition-all duration-300 ease-linear
+    }
 }

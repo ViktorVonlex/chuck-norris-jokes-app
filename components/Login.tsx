@@ -1,39 +1,46 @@
 import React, { useState } from 'react'
-import { saveUser, UserInfo } from '../utils/utils';
+import { saveUser } from '../utils/utils';
 import { signIn } from "next-auth/react";
+import { useRouter } from 'next/router';
 
-type Props = {
-    setLoggedIn: Function
-}
+type Props = {}
 
-function Login({setLoggedIn}: Props) {
+function Login({}: Props) {
 
     const [userInfo, setUserInfo] = useState({ email: "", password: "" });
     const [register, setRegister] = useState<Boolean>(false)
+    const router = useRouter()
 
     async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
-        // Prevent the browser from reloading the page
-        event.preventDefault();
-        console.log("loggin in")
-        const res = await signIn("credentials", {
-            email: userInfo.email,
-            password: userInfo.password,
-            redirect: false,
-          });
+      // Prevent the browser from reloading the page
+      event.preventDefault();
+      const res = await signIn("credentials", {
+        email: userInfo.email,
+        password: userInfo.password,
+        redirect: false,
+        });
 
-        if(res?.ok){
-            setLoggedIn(true)
-        }
+      if(res?.ok){
+        router.push("/")
       }
+    }
     
-      function handleRegister(event: React.FormEvent<HTMLFormElement>) {
-        // Prevent the browser from reloading the page
-        event.preventDefault();
-        console.log("register")
-        saveUser(userInfo);
-        setLoggedIn(true);
-        setRegister(false)
+    async function handleRegister(event: React.FormEvent<HTMLFormElement>) {
+      // Prevent the browser from reloading the page
+      event.preventDefault();
+      saveUser(userInfo);
+      setRegister(false)
+        
+      const res = await signIn("credentials", {
+        email: userInfo.email,
+        password: userInfo.password,
+        redirect: false,
+      });
+
+      if(res?.ok){
+        router.push("/")
       }
+    }
 
   return (
     <div className="mx-auto w-5/6">

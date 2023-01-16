@@ -84,7 +84,7 @@ function MiddlePanel({joke, jokeUrl, counter, getRandomJoke, setCounter, setLoad
         </div>
         <div className="w-full bg-gray-900 mt-5 pt-4 rounded-3xl">
             <div className="text-center text-white text-5xl mb-5">The Joke</div>
-            <div className="text-center bg-gray-800 w-full text-green-600 text-2xl rounded-b-3xl p-9 pb-10 pt-10">{joke}</div>
+            <div className="text-center bg-gray-800 w-full text-green-600 text-2xl rounded-b-3xl p-9 pb-10 pt-10 break-words">{joke}</div>
         </div>
     </div>
   )
