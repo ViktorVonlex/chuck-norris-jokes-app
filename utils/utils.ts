@@ -8,6 +8,11 @@ export type UserInfo = {
   password: String
 }
 
+export type Joke = {
+  id: number,
+  url: string
+}
+
 export async function saveUser(userInfo: UserInfo) {
     const response = await fetch('/api/createUser', {
       method: 'POST',

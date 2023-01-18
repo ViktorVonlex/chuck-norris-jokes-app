@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import FavJoke from './FavJoke'
-import { Item } from '../utils/utils';
-import {getSession, signOut, useSession} from 'next-auth/react'
+import { Joke } from '../utils/utils';
+import { signOut, useSession } from 'next-auth/react'
 
 type Props = {
     setCounter: Function,
     loading: Boolean,
-    items: Item[],
+    items: Joke[],
     setLoading: Function,
     getFavJoke: Function,
     setItems: Function
@@ -14,6 +14,8 @@ type Props = {
 
 function FavJokes({setCounter, loading, setLoading, getFavJoke, items, setItems}: Props) {
     const { data: session, status } = useSession()
+
+    let jokeCounter: number = 0;
 
     async function renderSavedJokes() {
         if(status==="authenticated"){
@@ -27,28 +29,14 @@ function FavJokes({setCounter, loading, setLoading, getFavJoke, items, setItems}
                 )
                 .then(data => {
                     console.log(data)
+                    setItems(data)
                 })
            }
-           
         }
-        
     }
 
     useEffect(() => {
         renderSavedJokes()
-        const allStorage = () => {
-            const jokes:Item[] = []
-            for (var i:number = 0; i<localStorage.length+1; i++) {
-                const correctNumber: number = i+1
-                const joke = localStorage.getItem(correctNumber.toString())
-                if (joke !== null){
-                    jokes.push(JSON.parse(joke))
-                }
-            }
-            setItems(jokes)
-            setLoading(false)
-        }
-        allStorage()
     }, [loading]);
 
   return (
@@ -56,19 +44,18 @@ function FavJokes({setCounter, loading, setLoading, getFavJoke, items, setItems}
         <div className="pb-4 pt-4 text-center">Favourite Jokes</div>
         <div className="category-entry">
             <div className="text-center py-2" onClick={() => {
-                localStorage.clear()
                 setLoading(true)
                 setCounter(1)
                 }
             }>Clear Jokes</div>
         </div>
-            { 
+            {
             items.map(item => {
                 if (item !==null) {
-                    return <FavJoke key={item.jokeNumber} jokeNumber={item.jokeNumber} jokeUrl={item.jokeUrl} getFavJoke={getFavJoke}/>
+                    jokeCounter = jokeCounter+1
+                    return <FavJoke key={item.id} jokeNumber={jokeCounter} jokeUrl={item.url} getFavJoke={getFavJoke}/>
                 }
-            }
-                )
+            })
             }
             <div className="category-entry text-center py-2" onClick={()=>{
                 signOut()
