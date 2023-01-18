@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import FavJoke from './FavJoke'
 import { Item } from '../utils/utils';
-import {signOut} from 'next-auth/react'
+import {getSession, signOut, useSession} from 'next-auth/react'
 
 type Props = {
     setCounter: Function,
@@ -13,8 +13,25 @@ type Props = {
 }
 
 function FavJokes({setCounter, loading, setLoading, getFavJoke, items, setItems}: Props) {
+    const { data: session, status } = useSession()
+
+    async function renderSavedJokes() {
+        if(status==="authenticated"){
+           const userMail: string|undefined|null = session?.user?.email
+           if(userMail !== null){
+                const res = await fetch('/api/loadUserJokes', {
+                     method: 'POST',
+                    body: userMail
+                });
+                console.log(res) 
+           }
+           
+        }
+        
+    }
 
     useEffect(() => {
+        renderSavedJokes()
         const allStorage = () => {
             const jokes:Item[] = []
             for (var i:number = 0; i<localStorage.length+1; i++) {

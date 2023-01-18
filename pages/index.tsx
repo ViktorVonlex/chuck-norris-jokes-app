@@ -77,7 +77,6 @@ export default function Home() {
           console.log(err)
       }
       )
-
       getRandomJoke()        
   }, [])
 
