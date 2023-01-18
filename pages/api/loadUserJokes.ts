@@ -10,16 +10,16 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   try {
-    const userJokes = await prisma.user.findMany({
+    const userJokes = await prisma.user.findUnique({
         where: {
             email: req.body
         },
         select: {
-          savedJokes: true
+          jokes: true
         }
     });
-    console.log(userJokes)
-    res.status(200).json(userJokes);
+    console.log(userJokes?.jokes)
+    res.status(200).json(userJokes?.jokes);
   } catch (err) {
     res.status(400).json({ message: 'Something went wrong' });
   }

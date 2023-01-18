@@ -22,8 +22,12 @@ function FavJokes({setCounter, loading, setLoading, getFavJoke, items, setItems}
                 const res = await fetch('/api/loadUserJokes', {
                      method: 'POST',
                     body: userMail
-                });
-                console.log(res) 
+                })
+                .then(res =>  res.json()
+                )
+                .then(data => {
+                    console.log(data)
+                })
            }
            
         }
