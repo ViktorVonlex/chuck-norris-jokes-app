@@ -4,7 +4,6 @@ import { Item, Joke } from '../utils/utils';
 import { signOut, useSession } from 'next-auth/react'
 
 type Props = {
-    setCounter: Function,
     loading: Boolean,
     items: Item[],
     setLoading: Function,
@@ -12,7 +11,7 @@ type Props = {
     setItems: Function
 }
 
-function FavJokes({setCounter, loading, setLoading, getFavJoke, items, setItems}: Props) {
+function FavJokes({loading, setLoading, getFavJoke, items, setItems}: Props) {
     const { data: session, status } = useSession()
 
     let jokeCounter: number = 0;
@@ -48,7 +47,6 @@ function FavJokes({setCounter, loading, setLoading, getFavJoke, items, setItems}
         <div className="category-entry">
             <div className="text-center py-2" onClick={() => {
                 setLoading(true)
-                setCounter(1)
                 }
             }>Clear Jokes</div>
         </div>
