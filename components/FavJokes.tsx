@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
 import FavJoke from './FavJoke'
-import { Joke } from '../utils/utils';
+import { Item, Joke } from '../utils/utils';
 import { signOut, useSession } from 'next-auth/react'
 
 type Props = {
     setCounter: Function,
     loading: Boolean,
-    items: Joke[],
+    items: Item[],
     setLoading: Function,
     getFavJoke: Function,
     setItems: Function
@@ -20,16 +20,19 @@ function FavJokes({setCounter, loading, setLoading, getFavJoke, items, setItems}
     async function renderSavedJokes() {
         if(status==="authenticated"){
            const userMail: string|undefined|null = session?.user?.email
-           if(userMail !== null){
+           if(userMail !== null && loading === true){
                 const res = await fetch('/api/loadUserJokes', {
-                     method: 'POST',
+                    method: 'POST',
                     body: userMail
                 })
-                .then(res =>  res.json()
+                .then(res =>  
+                    res.json()
                 )
                 .then(data => {
-                    console.log(data)
-                    setItems(data)
+                    if(data !== undefined) {
+                        setItems(data)
+                        setLoading(false)
+                    }
                 })
            }
         }
@@ -49,13 +52,12 @@ function FavJokes({setCounter, loading, setLoading, getFavJoke, items, setItems}
                 }
             }>Clear Jokes</div>
         </div>
-            {
-            items.map(item => {
-                if (item !==null) {
-                    jokeCounter = jokeCounter+1
-                    return <FavJoke key={item.id} jokeNumber={jokeCounter} jokeUrl={item.url} getFavJoke={getFavJoke}/>
-                }
-            })
+            {items !== undefined &&
+             items.map(item => {
+                jokeCounter = jokeCounter+1
+                //@ts-ignore
+                return <FavJoke key={item.id} jokeNumber={jokeCounter} jokeUrl={item.url} getFavJoke={getFavJoke}/>
+                })
             }
             <div className="category-entry text-center py-2" onClick={()=>{
                 signOut()

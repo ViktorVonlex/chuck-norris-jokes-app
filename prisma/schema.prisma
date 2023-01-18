@@ -9,14 +9,23 @@ datasource db {
 }
 
 model Joke {
-  id      Int          @id @default(autoincrement())
-  url     String       @unique
-  users   User[]
+  id    Int    @id @default(autoincrement())
+  url   String @unique
+  users User[]
 }
 
 model User {
-  id         Int          @id @default(autoincrement())
-  email      String       @unique
-  password   String
-  jokes      Joke[]
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
+  jokes    Joke[]
+}
+
+model JokeToUser {
+  A Int
+  B Int
+
+  @@unique([A, B], map: "_JokeToUser_AB_unique")
+  @@index([B], map: "_JokeToUser_B_index")
+  @@map("_JokeToUser")
 }

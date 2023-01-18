@@ -8,19 +8,18 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   try {
-    const userJokes = await prisma.user.findUnique({
-        where: {
-            email: req.body
+    const info = JSON.parse(req.body)
+    const savedJoke = await prisma.joke.create({
+        data: {
+          url: info.jokeUrl,
+          users: {
+            connect: {
+              email: info.userMail
+            }
+          }
         },
-        select: {
-          jokes: true
-        }
     });
-    if(userJokes!==null) {
-      res.status(200).json(userJokes?.jokes);
-    } else {
-      res.status(404).json({message: "No saved jokes for this user yet"})
-    }
+    res.status(200).json({ message: 'Succes save' });
   } catch (err) {
     res.status(400).json({ message: 'Something went wrong' });
   }

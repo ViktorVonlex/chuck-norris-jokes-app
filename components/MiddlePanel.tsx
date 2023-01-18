@@ -1,75 +1,29 @@
 import { Prisma } from '@prisma/client';
+import { useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react'
 import { Item } from '../utils/utils';
 
 type Props = {
     joke: string,
     jokeUrl: string,
-    counter: number,
-    items: Item[],
     getRandomJoke: Function,
-    setCounter: Function,
     setLoading: Function,
-    setItems: Function
 }
 
-function MiddlePanel({joke, jokeUrl, counter, getRandomJoke, setCounter, setLoading, items, setItems}: Props) {
+function MiddlePanel({joke, jokeUrl, getRandomJoke, setLoading}: Props) {
+  const { data: session, status } = useSession()
 
-  let jokeInfo:Item = {
-    jokeNumber: counter,
-    jokeUrl: jokeUrl
-  }
-
-  useEffect(()=>{
-    setCounter(localStorage.length)
-  },[])
-
-  function betterSaveJoke(object:Item, items:Item[]) {
-    if(!checkItems(object,items)) {
-      const jokes:Item[] = []
-      for (var i:number = 0; i<localStorage.length+1; i++) {
-        const correctNumber: number = i+1
-        const joke = localStorage.getItem(correctNumber.toString())
-        if (joke !== null){
-          jokes.push(JSON.parse(joke))
-        }
+  async function saveJoke(jokeUrl: string){
+    if(status==="authenticated"){
+      const userMail: string|undefined|null = session?.user?.email
+      if(userMail !== null){
+           const res = await fetch('/api/saveJoke', {
+              method: 'POST',
+              body: JSON.stringify({userMail: userMail, jokeUrl: jokeUrl})
+           })
+           setLoading(true)
       }
-      if(jokes.length==0){
-        const helpingObject:Item = {
-          jokeNumber: 1,
-          jokeUrl: object.jokeUrl
-        }
-        localStorage.setItem("1", JSON.stringify(helpingObject))
-        setItems(jokes)
-        setLoading(true)
-      }
-      else {
-        const lastSavedJokeNumber = jokes[jokes.length-1]
-        const tpc = lastSavedJokeNumber.jokeNumber
-        const helpingObject:Item = {
-          jokeNumber: tpc+1,
-          jokeUrl: object.jokeUrl
-        }
-        localStorage.setItem(helpingObject.jokeNumber.toString(), JSON.stringify(helpingObject))
-        jokes.push(helpingObject)
-        setItems(jokes)
-        setLoading(true)
-        }
-      }
-    }
-
-  function checkItems(object:Item, items:Item[]):boolean {
-    let passedItem:Item = {jokeNumber: 999, jokeUrl: "nothing to see here"};
-    items.forEach(element => {
-      if (element.jokeUrl == object.jokeUrl){
-        passedItem = element;
-      }
-    });
-    if(passedItem.jokeUrl == object.jokeUrl){
-      return true
-    } else {
-    return false
-    }
+   }
   }
 
   return (
@@ -78,8 +32,7 @@ function MiddlePanel({joke, jokeUrl, counter, getRandomJoke, setCounter, setLoad
         <div className="flex text-center mt-5">
             <div className="w-2/3 mr-1 middle-button p-4" onClick={() => getRandomJoke()}>Get random joke!</div>
             <div className="w-1/3 ml-1 middle-button p-4" onClick={() => {
-              //saveJoke(jokeInfo, items)
-              betterSaveJoke(jokeInfo,items)
+              saveJoke(jokeUrl)
             }}>Save this joke</div>
         </div>
         <div className="w-full bg-gray-900 mt-5 pt-4 rounded-3xl">

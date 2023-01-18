@@ -20,7 +20,7 @@ export default function Home() {
   const [joke, setJoke] = useState<string>("");
   const [jokeUrl, setJokeUrl] = useState<string>("");
   const [counter, setCounter] = useState<number>(1);
-  const [loading, setLoading] = useState<Boolean>(false);
+  const [loading, setLoading] = useState<Boolean>(true);
   const [items, setItems] = useState<Item[]>([]);
   const { data: session, status } = useSession()
     
@@ -84,7 +84,7 @@ export default function Home() {
     <>
     <div className="flex mx-auto px-4 bg-gray-400 h-screen">
       <Categories categoriesArray={categoriesArray} getJokeFromCategory={getJokeFromCategory}/>
-      <MiddlePanel joke={joke} jokeUrl={jokeUrl} counter={counter} getRandomJoke={getRandomJoke} setCounter={setCounter} setLoading={setLoading} items={items} setItems={setItems}/>
+      <MiddlePanel joke={joke} jokeUrl={jokeUrl} getRandomJoke={getRandomJoke} setLoading={setLoading} />
       {status === "authenticated"
       ? <FavJokes setCounter={setCounter} loading={loading} setLoading={setLoading} getFavJoke={getFavJoke} items={items} setItems={setItems} />
       : <div className="bg-gray-900 rounded-3xl shadow-2xl w-1/6 mt-5 h-min text-white">
