@@ -28,7 +28,7 @@ function Login({}: Props) {
     async function handleRegister(event: React.FormEvent<HTMLFormElement>) {
       // Prevent the browser from reloading the page
       event.preventDefault();
-      saveUser(userInfo);
+      await saveUser(userInfo);
       setRegister(false)
         
       const res = await signIn("credentials", {
