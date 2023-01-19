@@ -2,7 +2,6 @@ import Categories from "../components/Categories";
 import React, { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { Item } from "../utils/utils";
-import Login from "../components/Login";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 
