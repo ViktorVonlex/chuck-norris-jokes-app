@@ -1,3 +1,4 @@
+
 import type { NextApiRequest, NextApiResponse } from 'next';
 import prisma from '../../utils/prisma';
 import { getSession } from 'next-auth/react';
@@ -13,21 +14,21 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     try {
-      const userJokes = await prisma.user.findUnique({
-          where: {
-              email: req.body
-          },
-          select: {
-            jokes: true
-          }
-      });
-      if(userJokes!==null) {
-        res.status(200).json(userJokes?.jokes);
-      } else {
-        res.status(404).json({message: "No saved jokes for this user yet"})
-      }
+        await prisma.user.update({
+            where: {
+                email: req.body
+            },
+            data: {
+              jokes: {
+                set: []
+              }
+            }
+        });
+        res.status(200).json({ message: 'Succes delete of userJokes' });
     } catch (err) {
       res.status(400).json({ message: 'Something went wrong' });
     }
   }
-};export default handler
+};
+
+export default handler

@@ -37,6 +37,23 @@ function FavJokes({loading, setLoading, getFavJoke, items, setItems}: Props) {
         }
     }
 
+    async function deleteSavedJokes() {
+        if(status==="authenticated"){
+            const userMail: string|undefined|null = session?.user?.email
+            if(userMail !== null && items.length != 0){
+                console.log("sup")
+                 const res = await fetch('/api/deleteUserJokes', {
+                     method: 'POST',
+                     body: userMail
+                 })
+                 .then(res =>  
+                     res.json()
+                 )
+                setLoading(true)
+            }
+         }
+    }
+
     useEffect(() => {
         renderSavedJokes()
     }, [loading]);
@@ -46,7 +63,7 @@ function FavJokes({loading, setLoading, getFavJoke, items, setItems}: Props) {
         <div className="pb-4 pt-4 text-center">Favourite Jokes</div>
         <div className="category-entry">
             <div className="text-center py-2" onClick={() => {
-                setLoading(true)
+                deleteSavedJokes()
                 }
             }>Clear Jokes</div>
         </div>

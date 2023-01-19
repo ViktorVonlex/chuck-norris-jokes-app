@@ -1,9 +1,8 @@
-/* eslint-disable import/no-anonymous-default-export */
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 import prisma from '../../utils/prisma';
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession({req})
   if(!session) {
     res.status(401).json({error: "Unauthenticated user"});
@@ -30,4 +29,4 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       res.status(400).json({ message: 'Something went wrong' });
     }
   }
-};
+};export default handler
