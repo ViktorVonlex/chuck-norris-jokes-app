@@ -56,6 +56,7 @@ function FavJokes({loading, setLoading, getFavJoke, items, setItems}: Props) {
 
     useEffect(() => {
         renderSavedJokes()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [loading]);
 
   return (
@@ -71,7 +72,7 @@ function FavJokes({loading, setLoading, getFavJoke, items, setItems}: Props) {
              items.map(item => {
                 jokeCounter = jokeCounter+1
                 //@ts-ignore
-                return <FavJoke key={item.id} jokeNumber={jokeCounter} jokeUrl={item.url} getFavJoke={getFavJoke}/>
+                return <FavJoke key={item.id} jokeNumber={jokeCounter} jokeUrl={item.url} getFavJoke={getFavJoke} setLoading={setLoading}/>
                 })
             }
             <div className="category-entry text-center py-2" onClick={()=>{
