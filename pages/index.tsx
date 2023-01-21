@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic'
 import { Item } from "../utils/utils";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import Loading from "../components/Loading";
 
 const FavJokes = dynamic(() => import('../components/FavJokes'), {
   ssr: false,
@@ -93,6 +94,9 @@ export default function Home() {
             </Link>
           </div>
         </div>
+      }
+      {loading &&
+        <Loading />
       }
     </div>
     </>

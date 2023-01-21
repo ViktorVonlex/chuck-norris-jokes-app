@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import FavJoke from './FavJoke'
 import { Item, Joke } from '../utils/utils';
 import { signOut, useSession } from 'next-auth/react'
+import Modal from './Modal'
 
 type Props = {
     loading: Boolean,
@@ -13,6 +14,7 @@ type Props = {
 
 function FavJokes({loading, setLoading, getFavJoke, items, setItems}: Props) {
     const { data: session, status } = useSession()
+    const [isOpen, setIsOpen] = useState(false)
 
     let jokeCounter: number = 0;
 
@@ -41,7 +43,6 @@ function FavJokes({loading, setLoading, getFavJoke, items, setItems}: Props) {
         if(status==="authenticated"){
             const userMail: string|undefined|null = session?.user?.email
             if(userMail !== null && items.length != 0){
-                console.log("sup")
                  const res = await fetch('/api/deleteUserJokes', {
                      method: 'POST',
                      body: userMail
@@ -64,9 +65,11 @@ function FavJokes({loading, setLoading, getFavJoke, items, setItems}: Props) {
         <div className="pb-4 pt-4 text-center">Favourite Jokes</div>
         <div className="category-entry">
             <div className="text-center py-2" onClick={() => {
-                deleteSavedJokes()
+                //deleteSavedJokes()
+                setIsOpen(true)
                 }
             }>Clear Jokes</div>
+            <Modal isOpen={isOpen} setIsOpen={setIsOpen} deleteSavedJokes={deleteSavedJokes}/>
         </div>
             {items !== undefined &&
              items.map(item => {
