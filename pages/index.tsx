@@ -76,7 +76,8 @@ export default function Home() {
           console.log(err)
       }
       )
-      getRandomJoke()        
+      getRandomJoke()
+      setLoading(false)        
   }, [])
 
   return (
@@ -95,7 +96,7 @@ export default function Home() {
           </div>
         </div>
       }
-      {loading &&
+      {loading && 
         <Loading />
       }
     </div>
