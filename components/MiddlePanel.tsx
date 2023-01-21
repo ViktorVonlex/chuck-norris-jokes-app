@@ -8,20 +8,20 @@ type Props = {
     jokeUrl: string,
     getRandomJoke: Function,
     setLoading: Function,
+    setFetchedNew: Function
 }
 
-function MiddlePanel({joke, jokeUrl, getRandomJoke, setLoading}: Props) {
+function MiddlePanel({joke, jokeUrl, getRandomJoke, setLoading, setFetchedNew}: Props) {
   const { data: session, status } = useSession()
-
   async function saveJoke(jokeUrl: string){
     if(status==="authenticated"){
       const userMail: string|undefined|null = session?.user?.email
       if(userMail !== null){
-           const res = await fetch('/api/saveJoke', {
-              method: 'POST',
-              body: JSON.stringify({userMail: userMail, jokeUrl: jokeUrl})
-           })
-           setLoading(true)
+        const res = await fetch('/api/saveJoke', {
+          method: 'POST',
+          body: JSON.stringify({userMail: userMail, jokeUrl: jokeUrl})
+        })
+        setFetchedNew(true)
       }
    }
   }
@@ -32,6 +32,7 @@ function MiddlePanel({joke, jokeUrl, getRandomJoke, setLoading}: Props) {
         <div className="flex text-center mt-5">
             <div className="w-2/3 mr-1 middle-button p-4" onClick={() => getRandomJoke()}>Get random joke!</div>
             <div className="w-1/3 ml-1 middle-button p-4" onClick={() => {
+              setLoading(true)
               saveJoke(jokeUrl)
             }}>Save this joke</div>
         </div>

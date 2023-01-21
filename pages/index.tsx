@@ -21,7 +21,8 @@ export default function Home() {
   const [jokeUrl, setJokeUrl] = useState<string>("");
   const [loading, setLoading] = useState<Boolean>(true);
   const [items, setItems] = useState<Item[]>([]);
-  const { data: session, status } = useSession()
+  const { data: session, status } = useSession();
+  const [fetchedNew, setFetchedNew] = useState<Boolean>(false)
     
     function getRandomJoke() {
       fetch('https://api.chucknorris.io/jokes/random')
@@ -84,9 +85,9 @@ export default function Home() {
     <>
     <div className="flex mx-auto px-4 bg-gray-400 h-screen">
       <Categories categoriesArray={categoriesArray} getJokeFromCategory={getJokeFromCategory}/>
-      <MiddlePanel joke={joke} jokeUrl={jokeUrl} getRandomJoke={getRandomJoke} setLoading={setLoading} />
+      <MiddlePanel joke={joke} jokeUrl={jokeUrl} getRandomJoke={getRandomJoke} setLoading={setLoading} setFetchedNew={setFetchedNew}/>
       {status === "authenticated"
-      ? <FavJokes loading={loading} setLoading={setLoading} getFavJoke={getFavJoke} items={items} setItems={setItems} />
+      ? <FavJokes loading={loading} setLoading={setLoading} getFavJoke={getFavJoke} items={items} setItems={setItems} fetchedNew={fetchedNew} setFetchedNew={setFetchedNew}/>
       : <div className="bg-gray-900 rounded-3xl shadow-2xl w-1/6 mt-5 h-min text-white">
           <div className="mx-auto w-5/6 flex flex-col justify-center">
             <div className="pb-4 pt-4 text-center text-xl mx-auto">Log in to see fav jokes</div>

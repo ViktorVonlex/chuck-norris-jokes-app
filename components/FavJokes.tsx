@@ -7,12 +7,14 @@ import Modal from './Modal'
 type Props = {
     loading: Boolean,
     items: Item[],
+    fetchedNew: Boolean,
     setLoading: Function,
     getFavJoke: Function,
-    setItems: Function
+    setItems: Function,
+    setFetchedNew: Function
 }
 
-function FavJokes({loading, setLoading, getFavJoke, items, setItems}: Props) {
+function FavJokes({loading, setLoading, getFavJoke, items, setItems, fetchedNew, setFetchedNew}: Props) {
     const { data: session, status } = useSession()
     const [isOpen, setIsOpen] = useState(false)
 
@@ -21,7 +23,7 @@ function FavJokes({loading, setLoading, getFavJoke, items, setItems}: Props) {
     async function renderSavedJokes() {
         if(status==="authenticated"){
            const userMail: string|undefined|null = session?.user?.email
-           if(userMail !== null && loading === true){
+           if(userMail !== null && fetchedNew === true){
                 const res = await fetch('/api/loadUserJokes', {
                     method: 'POST',
                     body: userMail
@@ -33,6 +35,7 @@ function FavJokes({loading, setLoading, getFavJoke, items, setItems}: Props) {
                     if(data !== undefined) {
                         setItems(data)
                         setLoading(false)
+                        setFetchedNew(false)
                     }
                 })
            }
@@ -50,7 +53,7 @@ function FavJokes({loading, setLoading, getFavJoke, items, setItems}: Props) {
                  .then(res =>  
                      res.json()
                  )
-                setLoading(true)
+                setFetchedNew(true)
             }
          }
     }
@@ -58,18 +61,17 @@ function FavJokes({loading, setLoading, getFavJoke, items, setItems}: Props) {
     useEffect(() => {
         renderSavedJokes()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [loading]);
+    }, [fetchedNew]);
 
   return (
     <div className="bg-gray-900 rounded-3xl shadow-2xl w-1/6 mt-5 h-min text-white max-[1536px]:h-5/6 max-[1536px]:overflow-auto scrollbar-hide">
         <div className="pb-4 pt-4 text-center">Favourite Jokes</div>
         <div className="category-entry">
             <div className="text-center py-2" onClick={() => {
-                //deleteSavedJokes()
                 setIsOpen(true)
                 }
             }>Clear Jokes</div>
-            <Modal isOpen={isOpen} setIsOpen={setIsOpen} deleteSavedJokes={deleteSavedJokes}/>
+            <Modal isOpen={isOpen} setIsOpen={setIsOpen} deleteSavedJokes={deleteSavedJokes} setLoading={setLoading}/>
         </div>
             {items !== undefined &&
              items.map(item => {
