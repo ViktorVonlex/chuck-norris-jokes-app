@@ -6,15 +6,9 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import Loading from "../components/Loading";
 import Head from "next/head";
+import MiddlePanel from "../components/MiddlePanel";
+import FavJokes from "../components/FavJokes";
 
-
-const FavJokes = dynamic(() => import('../components/FavJokes'), {
-  ssr: false,
-})
-
-const MiddlePanel = dynamic(() => import('../components/MiddlePanel'), {
-  ssr: false,
-})
 
 type Props = {
   data: {
