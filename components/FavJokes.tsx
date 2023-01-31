@@ -46,13 +46,13 @@ function FavJokes({loading, setLoading, getFavJoke, items, setItems, fetchedNew,
         if(status==="authenticated"){
             const userMail: string|undefined|null = session?.user?.email
             if(userMail !== null && items.length != 0){
-                 const res = await fetch('/api/deleteUserJokes', {
-                     method: 'POST',
-                     body: userMail
-                 })
-                 .then(res =>  
-                     res.json()
-                 )
+                const res = await fetch('/api/deleteUserJokes', {
+                    method: 'POST',
+                    body: userMail
+                })
+                .then(res =>  
+                    res.json()
+                )
                 setFetchedNew(true)
             }
          }
@@ -77,7 +77,7 @@ function FavJokes({loading, setLoading, getFavJoke, items, setItems, fetchedNew,
              items.map(item => {
                 jokeCounter = jokeCounter+1
                 //@ts-ignore
-                return <FavJoke key={item.id} jokeNumber={jokeCounter} jokeUrl={item.url} getFavJoke={getFavJoke} setLoading={setLoading}/>
+                return <FavJoke key={item.id} jokeNumber={jokeCounter} jokeUrl={item.url} getFavJoke={getFavJoke} setLoading={setLoading} setFetchedNew={setFetchedNew}/>
                 })
             }
             <div className="category-entry text-center py-2" onClick={()=>{

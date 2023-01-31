@@ -36,54 +36,57 @@ export default function Home({data}: Props) {
   const { data: session, status } = useSession();
   const [fetchedNew, setFetchedNew] = useState<Boolean>(false)
     
-    function getRandomJoke() {
-      fetch('https://api.chucknorris.io/jokes/random')
-      .then(res =>  res.json()
-      )
-      .then(data => {
-          setJoke(data.value);
-          setJokeUrl(data.url);
-      })
-      .catch(err => {
-          console.log(err)
-      }
-      )
-    }
+  function getRandomJoke() {
+    fetch('https://api.chucknorris.io/jokes/random')
+    .then(res =>  res.json()
+    )
+    .then(data => {
+      setJoke(data.value);
+      setJokeUrl(data.url);
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
 
-    function getJokeFromCategory(category: string) {
-      fetch(`https://api.chucknorris.io/jokes/random?category=${category}`)
-      .then(res =>  res.json()
-      )
-      .then(data => {
-          setJoke(data.value);
-          setJokeUrl(data.url);
-      })
-      .catch(err => {
-          console.log(err)
-      }
-      )
-    }
+  function getJokeFromCategory(category: string) {
+    fetch(`https://api.chucknorris.io/jokes/random?category=${category}`)
+    .then(res =>  res.json()
+    )
+    .then(data => {
+      setJoke(data.value);
+      setJokeUrl(data.url);
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
 
-    function getFavJoke(url: string) {
-      fetch(url)
-      .then(res =>  res.json()
-      )
-      .then(data => {
-          setJoke(data.value);
-          setJokeUrl(data.url);
-      })
-      .catch(err => {
-          console.log(err)
-      }
-      )
-    }
+  function getFavJoke(url: string) {
+    fetch(url)
+    .then(res =>  res.json()
+    )
+    .then(data => {
+      setJoke(data.value);
+      setJokeUrl(data.url);
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
 
-    useEffect(() => {
-      setCategories(data.jokeCategories)
-      setJoke(data.randomJoke.value);
-      setJokeUrl(data.randomJoke.url);
-      setLoading(false)        
+  useEffect(() => {
+    setCategories(data.jokeCategories)
+    setJoke(data.randomJoke.value);
+    setJokeUrl(data.randomJoke.url);
+    setLoading(false)        
   }, [])
+
+  useEffect(() => {
+    if(status === "authenticated"){
+      setFetchedNew(true)
+    }
+  },[status])
 
   return (
     <>
