@@ -23,6 +23,8 @@ function MiddlePanel({joke, jokeUrl, getRandomJoke, setLoading, setFetchedNew}: 
         })
         setFetchedNew(true)
       }
+   } else {
+    setLoading(false)
    }
   }
 

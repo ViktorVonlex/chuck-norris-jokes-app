@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import FavJoke from './FavJoke'
 import { Item, Joke } from '../utils/utils';
 import { signOut, useSession } from 'next-auth/react'
-import Modal from './Modal'
+import ModalDelete from './ModalDelete'
 
 type Props = {
     loading: Boolean,
@@ -71,7 +71,7 @@ function FavJokes({loading, setLoading, getFavJoke, items, setItems, fetchedNew,
                 setIsOpen(true)
                 }
             }>Clear Jokes</div>
-            <Modal isOpen={isOpen} setIsOpen={setIsOpen} deleteSavedJokes={deleteSavedJokes} setLoading={setLoading}/>
+            <ModalDelete isOpen={isOpen} setIsOpen={setIsOpen} deleteSavedJokes={deleteSavedJokes} setLoading={setLoading}/>
         </div>
             {items !== undefined &&
              items.map(item => {
