@@ -43,10 +43,12 @@ function Login({}: Props) {
     }
 
   return (
-    <div className="mx-auto w-5/6">
-        <form onSubmit={register? handleRegister : handleLogin} className="flex flex-col justify-center">
+    <div className="flex justify-center items-center px-4 bg-gray-400 h-screen">
+      <div className="mx-auto w-1/3 bg-gray-900 rounded-3xl shadow-2xl py-5 h-min mt-[-150px] text-white flex flex-col justify-center items-center">
+        <p className="text-5xl mb-8">Create account or log in</p>
+        <form onSubmit={register? handleRegister : handleLogin} className="w-5/6 flex flex-col justify-center">
             <input
-                className="rounded-2xl mx-2 text-center text-green-600 h-9"
+                className="rounded-2xl mx-2 text-center text-green-600 h-10 text-xl"
                 value={userInfo.email}
                 onChange={({ target }) =>
                     setUserInfo({ ...userInfo, email: target.value })
@@ -55,7 +57,7 @@ function Login({}: Props) {
                 placeholder="john@email.com"
                 />
                 <input
-                className="rounded-2xl m-2 mb-3 mt-3 text-center text-green-600 h-9"
+                className="rounded-2xl m-2 mb-3 mt-3 text-center text-green-600 h-10 text-xl"
                 value={userInfo.password}
                 onChange={({ target }) =>
                     setUserInfo({ ...userInfo, password: target.value })
@@ -66,8 +68,8 @@ function Login({}: Props) {
                 <button type="submit" className="category-entry">Login</button>
                 <button type="submit" onClick={()=>setRegister(true)} className="category-entry">Register</button> 
         </form>
+      </div>
     </div>
-    
   )
 }
 
