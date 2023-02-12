@@ -74,6 +74,7 @@ export default function Home({data}: Props) {
     setJoke(data.randomJoke.value);
     setJokeUrl(data.randomJoke.url);
     setLoading(false)        
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -86,7 +87,7 @@ export default function Home({data}: Props) {
     <>
     <Head>
       <title>Chuck Norris Jokes App</title>
-      <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+      <meta httpEquiv="X-UA-Compatible" content="IE=edge"/>
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
       <meta name="description" content="App for funny jokes" />
       <meta name="keywords" content="Chuck Norris" />
