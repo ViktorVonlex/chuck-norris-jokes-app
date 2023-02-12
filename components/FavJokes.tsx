@@ -66,13 +66,13 @@ function FavJokes({loading, setLoading, getFavJoke, items, setItems, fetchedNew,
   return (
     <div className="bg-gray-900 rounded-3xl shadow-2xl w-1/6 mt-5 h-min text-white max-[1536px]:h-5/6 max-[1536px]:overflow-auto scrollbar-hide">
         <div className="pb-4 pt-4 text-center">Favourite Jokes</div>
-        <div className="category-entry">
+        <button className="category-entry block">
             <div className="text-center py-2" onClick={() => {
                 setIsOpen(true)
                 }
             }>Clear Jokes</div>
             <ModalDelete isOpen={isOpen} setIsOpen={setIsOpen} deleteSavedJokes={deleteSavedJokes} setLoading={setLoading}/>
-        </div>
+        </button>
             {items !== undefined &&
              items.map(item => {
                 jokeCounter = jokeCounter+1
@@ -80,9 +80,9 @@ function FavJokes({loading, setLoading, getFavJoke, items, setItems, fetchedNew,
                 return <FavJoke key={item.id} jokeNumber={jokeCounter} jokeUrl={item.url} getFavJoke={getFavJoke} setLoading={setLoading} setFetchedNew={setFetchedNew}/>
                 })
             }
-            <div className="category-entry text-center py-2" onClick={()=>{
+            <button className="category-entry text-center py-2 block" onClick={()=>{
                 signOut()
-            }}>Logout</div>
+            }}>Logout</button>
     </div> 
   )
 }

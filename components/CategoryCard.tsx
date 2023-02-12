@@ -8,9 +8,9 @@ type Props = {
 function CategoryCard({name, getJokeFromCategory}: Props) {
 
   return (
-    <div className="category-entry" onClick={() => getJokeFromCategory(name)}>
+    <button className="category-entry block" onClick={() => getJokeFromCategory(name)}>
         <div className="text-center py-2">{name}</div>
-    </div>
+    </button>
   )
 }
 

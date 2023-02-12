@@ -30,9 +30,9 @@ function FavJoke({jokeNumber, jokeUrl, getFavJoke, setLoading, setFetchedNew}: P
 
   return (
     <div className="flex text-center w-4/5 mx-auto">
-      <div className="category-entry w-4/5 mr-1" onClick={() => getFavJoke(jokeUrl)}>
+      <button className="category-entry w-4/5 mr-1 block" onClick={() => getFavJoke(jokeUrl)}>
           <div className="text-center py-2">{jokeNumber}</div>
-      </div>
+      </button>
       <button className="button w-1/5 ml-1 flex justify-center items-center text-red-600" onClick={()=>{
         deleteJoke(jokeUrl);
         setLoading(true)
