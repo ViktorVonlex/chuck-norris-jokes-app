@@ -1,6 +1,5 @@
 import Categories from "../components/Categories";
 import React, { useEffect, useState } from 'react'
-import dynamic from 'next/dynamic'
 import { Item } from "../utils/utils";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
@@ -91,6 +90,7 @@ export default function Home({data}: Props) {
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
       <meta name="description" content="App for funny jokes" />
       <meta name="keywords" content="Chuck Norris" />
+      <link rel="icon" type="image/png" href="/icons8-chuck-norris-16.png"/>
     </Head>
     <div className="flex mx-auto px-4 bg-gray-400 h-screen">
       <Categories categoriesArray={categoriesArray} getJokeFromCategory={getJokeFromCategory}/>
