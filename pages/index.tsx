@@ -88,7 +88,7 @@ export default function Home({data}: Props) {
       <title>Chuck Norris Jokes App</title>
       <meta httpEquiv="X-UA-Compatible" content="IE=edge"/>
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-      <meta name="description" content="App for funny jokes" />
+      <meta name="description" content="App for funny Chuck Norris jokes" />
       <meta name="keywords" content="Chuck Norris" />
       <link rel="icon" type="image/png" href="/icons8-chuck-norris-16.png"/>
     </Head>
